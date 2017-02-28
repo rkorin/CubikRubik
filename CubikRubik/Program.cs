@@ -36,7 +36,7 @@ namespace CubikRubik
                 18,10,11,21,13,14,24,16,17,
                 27,19,20,30,22,23,33,25,26,
                 0,28,29,3,31,32,6,34,35,
-                38,41,44,37,49,43,36,39,42,
+                38,41,44,37,40,43,36,39,42,
                 45,46,47,48,49,50,51,52,53
             };
             var turn_L = new int[]
@@ -126,7 +126,32 @@ namespace CubikRubik
                0,1,2,3,4,5,6,7,8
     };
 
+            var turn__pif_paf = generate_turns(
+                turn_r, turn_t, turn_R, turn_T
+                );
+
             var s = etalon;
+
+            //s = apply(s, turn__pif_paf);
+            //s = apply(s, turn__pif_paf);
+            //s = apply(s, turn__pif_paf);
+            //s = apply(s, turn__pif_paf);
+            //s = apply(s, turn__pif_paf);
+            //s = apply(s, turn__pif_paf);
+
+            //s = apply(s, turn_3);
+            //s = apply(s, turn_3);
+            //s = apply(s, turn_4);
+            //s = apply(s, turn_4);
+
+            //s = apply(s, turn_B);
+            //s = apply(s, turn_t);
+            //s = apply(s, turn_r);
+            //s = apply(s, turn_T);
+            //s = apply(s, turn_R);
+
+            //draw(s);
+            //Console.ReadLine();
 
             Dictionary<string, int[]> turns = new Dictionary<string, int[]>
             {
@@ -134,13 +159,21 @@ namespace CubikRubik
                 {"l",turn_l },{"L",turn_L },
                 {"t",turn_t },{"T",turn_T },
                 {"b",turn_b },{"B",turn_B },
-                {"tu",turn_1 },{"td",turn_2 },
+                    {"tu",turn_1 },{"td",turn_2 },
                 {"tl",turn_3 },{"tr",turn_4 }
             };
             Dictionary<string, int[]> turns1 = new Dictionary<string, int[]>
-            {                
+            {
                 {"tu",turn_1 },{"td",turn_2 },
                 {"tl",turn_3 },{"tr",turn_4 }
+            };
+            Dictionary<string, int[]> turns_pifpaf = new Dictionary<string, int[]>
+            {
+                {"r",turn_r },{"R",turn_R },
+                {"l",turn_l },{"L",turn_L },
+                {"t",turn_t },{"T",turn_T },
+                {"b",turn_b },{"B",turn_B }, {"tu",turn_1 },{"td",turn_2 },
+                {"tl",turn_3 },{"tr",turn_4 }, {"pifpaf", turn__pif_paf }
             };
 
             Random r = new Random();
@@ -154,18 +187,143 @@ namespace CubikRubik
             }
 
             draw(s);
+            Dictionary<string, string> all_positions;
+            string all_turns;
+            var res = solve(s, turns1, new Dictionary<int, char> { { 4, 'g' }, { 4 + 9, 'p' } });
+            s = res.Item1;
+            all_turns = res.Item2;
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            draw(s);
 
-            Dictionary<string, string> all_positions = new Dictionary<string, string>();
-            all_positions[s] = "";            
+            res = solve(s, turns, new Dictionary<int, char> {
+                { 4, 'g' }, { 4 + 9, 'p' }, { 1, 'g' }, { 34, 'r' } });
+            s = res.Item1;
+            all_turns += res.Item2;
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            draw(s);
+
+
+            res = solve(s, turns, new Dictionary<int, char> {
+                { 4, 'g' }, { 4 + 9, 'p' }, { 1, 'g' }, { 34, 'r' },
+                { 5, 'g' }, { 48, 'y' }});
+            s = res.Item1;
+            all_turns += res.Item2;
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            draw(s);
+
+            res = solve(s, turns, new Dictionary<int, char> {
+                { 4, 'g' }, { 4 + 9, 'p' }, { 1, 'g' }, { 34, 'r' },
+                { 5, 'g' }, { 48, 'y' },
+                { 3, 'g' }, { 41, 'w' }});
+            s = res.Item1;
+            all_turns += res.Item2;
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            draw(s);
+
+            res = solve(s, turns, new Dictionary<int, char> {
+                { 4, 'g' }, { 4 + 9, 'p' }, { 1, 'g' }, { 34, 'r' },
+                { 5, 'g' }, { 48, 'y' },
+                { 3, 'g' }, { 41, 'w' },
+                { 7, 'g' }, { 10, 'p' }});
+            s = res.Item1;
+            all_turns += res.Item2;
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            draw(s);
+
+            res = solve(s, turns_pifpaf, new Dictionary<int, char> {
+                { 4, 'g' }, { 4 + 9, 'p' }, { 1, 'g' }, { 34, 'r' },
+                { 5, 'g' }, { 48, 'y' },
+                { 3, 'g' }, { 41, 'w' },
+                { 7, 'g' }, { 10, 'p' },
+                { 0, 'g' }, { 33, 'r' }, { 38, 'w' }});
+            s = res.Item1;
+            all_turns += res.Item2;
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            draw(s);
+
+            res = solve(s, turns_pifpaf, new Dictionary<int, char> {
+                { 4, 'g' }, { 4 + 9, 'p' }, { 1, 'g' }, { 34, 'r' },
+                { 5, 'g' }, { 48, 'y' },
+                { 3, 'g' }, { 41, 'w' },
+                { 7, 'g' }, { 10, 'p' },
+                { 0, 'g' }, { 33, 'r' }, { 38, 'w' },
+                { 2, 'g' }, { 35, 'r' }, { 45, 'y' }});
+            s = res.Item1;
+            all_turns += res.Item2;
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            draw(s);
+
+
+            res = solve(s, turns_pifpaf, new Dictionary<int, char> {
+                { 4, 'g' }, { 4 + 9, 'p' }, { 1, 'g' }, { 34, 'r' },
+                { 5, 'g' }, { 48, 'y' },
+                { 3, 'g' }, { 41, 'w' },
+                { 7, 'g' }, { 10, 'p' },
+                { 0, 'g' }, { 33, 'r' }, { 38, 'w' },
+                { 2, 'g' }, { 35, 'r' }, { 45, 'y' },
+                { 6, 'g' }, { 9, 'p' }, { 44, 'w' }
+            });
+            s = res.Item1;
+            all_turns += res.Item2;
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("----------------------------");
+            draw(s);
+
+            Console.WriteLine(all_turns);
+            Console.ReadLine();
+        }
+
+        private static int[] generate_turns(params int[][] masks)
+        {
+            int[] res = new int[54];
+            for (var i = 0; i < 54; ++i)
+                res[i] = i;
+            foreach (var mask in masks)
+            {
+                int[] res2 = new int[54];
+                for (var i = 0; i < 54; ++i)
+                    res2[i] = res[mask[i]];
+                res = res2;
+            }
+            return res;
+        }
+
+        private static Tuple<string, string> solve(string s, Dictionary<string, int[]> turns1,
+            Dictionary<int, char> template)
+        {
+            var all_positions = new Dictionary<string, string>();
+            all_positions[s] = "";
             while (true)
             {
                 generate_turns(turns1, all_positions);
-                foreach (var p in all_positions)
-                    if (p.Key[4] == 'g')
-                        break;
+                var founded = all_positions.Keys.Where(w =>
+                {
+                    foreach (var t in template)
+                        if (w[t.Key] != t.Value)
+                            return false;
+                    return true;
+                }).FirstOrDefault();
+                if (!string.IsNullOrWhiteSpace(founded))
+                {
+                    return new Tuple<string, string>(founded, all_positions[founded]);
+                }
             }
-
-            Console.ReadLine();
+            return null;
         }
 
         private static void generate_turns(Dictionary<string, int[]> turns, Dictionary<string, string> all_positions)
@@ -213,8 +371,8 @@ namespace CubikRubik
         private static void d9(List<char> m, int X, int Y, string v3)
         {
             int i = 0;
-            for (int x = 0; x < 3; ++x)
-                for (int y = 0; y < 3; ++y)
+            for (int y = 0; y < 3; ++y)
+                for (int x = 0; x < 3; ++x)
                     set(m, X + x, Y + y, v3[i++]);
         }
 
@@ -225,9 +383,24 @@ namespace CubikRubik
 
         private static string apply(string s, int[] v)
         {
+
             StringBuilder sb = new StringBuilder(s);
             for (var i = 0; i <= 53; ++i)
                 sb[i] = s[v[i]];
+
+            List<char> t = new List<char>();
+            t.Add(sb[4]);
+            t.Add(sb[4 + 9]);
+            t.Add(sb[4 + 18]);
+            t.Add(sb[4 + 27]);
+            t.Add(sb[4 + 36]);
+            t.Add(sb[4 + 45]);
+            if (t.Distinct().Count() != 6)
+            {
+                System.Diagnostics.Debugger.Break();
+            }
+
+
             return sb.ToString();
         }
     }
